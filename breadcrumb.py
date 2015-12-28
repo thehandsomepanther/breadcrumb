@@ -2,7 +2,7 @@ import json
 import csv
 
 datafile = 'crouton.csv'
-enrollmentsfile = 'enrollments.txt'
+enrollmentsfile = 'enrollments.json'
 
 def calc_average_enrollment(enrollment_list):
 	total = 0
@@ -14,8 +14,19 @@ with open(datafile, 'rb') as csvfile:
 	reader = csv.DictReader(csvfile)
 	course_dict = {}
 	for row in reader:
+		quarter_code = 0
+
+		if row['academic_quarter'] == "Winter":
+			quarter_code = 1
+		elif row['academic_quarter'] == "Spring":
+			quarter_code = 2
+		elif row['academic_quarter'] == "Summer":
+			quarter_code = 3
+		elif row['academic_quarter'] == "Fall":
+			quarter_code = 4
+
 		course_key = "{} {}-{} {}".format(row['academic_subject_code'], row['course_number'], row['course_subnum'], row['course_name'])
-		course_term = "{} {}".format(row['academic_quarter'], row['academic_year'])
+		course_term = "{}-{}".format(quarter_code, row['academic_year'])
 
 		if course_key in course_dict.keys():
 			this_course = course_dict[course_key]
@@ -28,6 +39,9 @@ with open(datafile, 'rb') as csvfile:
 			this_course['average_enrollment'] = calc_average_enrollment(this_course['enrollment_list'])
 		else:
 			course_dict[course_key] = {
+				'academic_subject_code' : row['academic_subject_code'],
+				'course_number_full' : "{}-{}".format(row['course_number'], row['course_subnum']),
+				'course_name' : row['course_name'],
 				'average_enrollment' : int(row['enrollment_count']),
 				'enrollment_list' : {
 					course_term : int(row['enrollment_count'])
