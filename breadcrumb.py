@@ -58,15 +58,12 @@ min_enroll = 0
 for course_key in course_dict.keys():
 	if len(most_popular_courses.keys()) < 20:
 		most_popular_courses[course_key] = course_dict[course_key]
-		min_key = min(most_popular_courses.iterkeys(), key=(lambda key: most_popular_courses[key]['average_enrollment']))
-		min_enroll = most_popular_courses[min_key]['average_enrollment']
 	elif course_dict[course_key]['average_enrollment'] > min_enroll:
 		most_popular_courses[course_key] = course_dict[course_key]
-		min_key = min(most_popular_courses.iterkeys(), key=(lambda key: most_popular_courses[key]['average_enrollment']))
-		min_enroll = most_popular_courses[min_key]['average_enrollment']
 		most_popular_courses.pop(min_key, None)
-		min_key = min(most_popular_courses.iterkeys(), key=(lambda key: most_popular_courses[key]['average_enrollment']))
-		min_enroll = most_popular_courses[min_key]['average_enrollment']
+
+	min_key = min(most_popular_courses.iterkeys(), key=(lambda key: most_popular_courses[key]['average_enrollment']))
+	min_enroll = most_popular_courses[min_key]['average_enrollment']
 
 with open(popularfile, 'w') as outfile:
 	 json.dump(most_popular_courses, outfile)
