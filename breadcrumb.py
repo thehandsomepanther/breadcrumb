@@ -1,7 +1,8 @@
+import sys
 import json
 import csv
 
-datafile = 'crouton.csv'
+datafile = sys.argv[1]
 enrollmentsfile = 'enrollments.json'
 popularfile = 'popular.json'
 
@@ -15,6 +16,7 @@ with open(datafile, 'rb') as csvfile:
 	reader = csv.DictReader(csvfile)
 	course_dict = {}
 	for row in reader:
+		print row
 		quarter_code = 0
 
 		if row['academic_quarter'] == "Winter":
