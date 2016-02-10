@@ -16,7 +16,6 @@ with open(datafile, 'rb') as csvfile:
 	reader = csv.DictReader(csvfile)
 	course_dict = {}
 	for row in reader:
-		print row
 		quarter_code = 0
 
 		if row['academic_quarter'] == "Winter":

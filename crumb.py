@@ -11,6 +11,7 @@ with open(dirty_file, 'rb') as dirty, open(clean_file, 'wb') as clean:
     reader = csv.reader(dirty, delimiter=',')
     writer = csv.writer(clean, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
 
+    next(reader)
     for row in reader:
         writer.writerow(row[3:])
 
